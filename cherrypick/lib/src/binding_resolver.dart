@@ -31,7 +31,7 @@ typedef Instance<T> = FutureOr<T>;
 /// Provider<MyService> provider = () => MyService();
 /// Provider<Api> asyncProvider = () async => await Api.connect();
 /// ```
-typedef Provider<T> = FutureOr<T> Function();
+typedef FutureOrProviderCallback<T> = FutureOr<T> Function();
 
 /// Provider function type that accepts a dynamic parameter, for factory/parametrized injection.
 /// Returns [T] or [Future<T>].

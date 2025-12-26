@@ -89,13 +89,13 @@ class RiverpodAdapter extends DIAdapter<Map<String, rp.ProviderBase<Object?>>> {
       return (providers) {
         switch (scenario) {
           case UniversalScenario.register:
-            providers['UniversalService'] = rp.Provider<UniversalService>(
+            providers['UniversalService'] = rp.FutureOrProviderCallback<UniversalService>(
                 (ref) => UniversalServiceImpl(value: 'reg', dependency: null));
             break;
           case UniversalScenario.named:
-            providers['impl1'] = rp.Provider<UniversalService>(
+            providers['impl1'] = rp.FutureOrProviderCallback<UniversalService>(
                 (ref) => UniversalServiceImpl(value: 'impl1'));
-            providers['impl2'] = rp.Provider<UniversalService>(
+            providers['impl2'] = rp.FutureOrProviderCallback<UniversalService>(
                 (ref) => UniversalServiceImpl(value: 'impl2'));
             break;
           case UniversalScenario.chain:
@@ -104,7 +104,7 @@ class RiverpodAdapter extends DIAdapter<Map<String, rp.ProviderBase<Object?>>> {
                 final prevDepName = '${chain}_${level - 1}';
                 final depName = '${chain}_$level';
                 providers[depName] =
-                    rp.Provider<UniversalService>((ref) => UniversalServiceImpl(
+                    rp.FutureOrProviderCallback<UniversalService>((ref) => UniversalServiceImpl(
                           value: depName,
                           dependency: level > 1
                               ? ref.watch(providers[prevDepName]
@@ -114,7 +114,7 @@ class RiverpodAdapter extends DIAdapter<Map<String, rp.ProviderBase<Object?>>> {
               }
             }
             final depName = '${chainCount}_$nestingDepth';
-            providers['UniversalService'] = rp.Provider<UniversalService>(
+            providers['UniversalService'] = rp.FutureOrProviderCallback<UniversalService>(
                 (ref) => ref.watch(
                     providers[depName] as rp.ProviderBase<UniversalService>));
             break;
